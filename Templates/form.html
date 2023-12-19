@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        /* Some basic styles for demonstration purposes */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: calc(100% - 12px);
+            padding: 6px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <form action="{% url 'form' %}" method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="dob">DOB:</label>
+        <input type="date" id="dob" name="dob" required>
+        
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required>
+        
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="">Select</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="4" required></textarea>
+        
+        <label for="department">Department:</label>
+        <select id="department" name="department" required onchange="updateCourses()">
+            <option value="">Select</option>
+            <option value="commerce">Commerce</option>
+            <option value="science">Science</option>
+            <!-- Add more options -->
+            <option value="ComputerScience">Computer Science</option>
+            <option value="Humanities">Humanities</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Mathematics">Mathematics</option>
+        </select>
+        
+        <label for="course">Course:</label>
+        <select id="course" name="course" required>
+            <option value="">Select</option>
+            <!-- Options will be populated based on the selected department -->
+            <option value="commerce">Bcom</option>
+            <option value="commerce">BBA</option>
+            <option value="commerce">Mcom</option>
+            <option value="commerce">MBA</option>
+            <option value="commerce">BMS</option>
+            <option value="science">BSc Physics</option>
+            <option value="science">BSc Chemistry</option>
+            <option value="science">BSc Maths</option>
+            <option value="science">MSc Physics</option>
+            <option value="science">MSc Chemistry</option>
+            <option value="science">MSc Maths</option>
+            <option value="science">BSc Computer Science</option>
+            <option value="science">BCA</option>
+            <option value="science">MSc Computer Science</option>
+            <option value="science">MCA</option>
+            <option value="commerce">BA History</option>
+            <option value="commerce">BA Geography</option>
+            <option value="commerce">BA Economics</option>
+            <option value="science">BE Electronics</option>
+            <option value="science">Diploma in Electronics</option>
+        </select>
+        
+        <label for="purpose">Purpose:</label>
+        <select id="purpose" name="purpose" required>
+            <option value="">Select</option>
+            <option value="enquiry">For Enquiry</option>
+            <option value="order">Place Order</option>
+            <option value="return">Return</option>
+            <!-- Add more options -->
+        </select>
+        
+        <label>Materials Provide:</label>
+        <div class="checkboxes">
+            <label><input type="checkbox" name="materials" value="notebook">Notebook</label>
+            <label><input type="checkbox" name="materials" value="pen">Pen</label>
+            <label><input type="checkbox" name="materials" value="papers">Exam Papers</label>
+            <!-- Add more checkboxes -->
+        </div>
+        
+        <input type="submit" value="Submit">
+        <input type="button" value="Logout" onclick="window.location.href='/logout/'">  
+    </form>
+    <script>
+        function updateCourses() {
+            var department = document.getElementById("department");
+            var course = document.getElementById("course");
+
+            course.innerHTML = ""; // Clear previous options
+
+            // Add options based on the selected department
+            switch (department.value) {
+                case "commerce":
+                    addOptions(course, ["Bcom", "BBA", "BMS", "Mcom", "MBA"]);
+                    break;
+                case "science":
+                    addOptions(course, ["BSc Maths", "BSc Physics", "BSc Chemistry","MSc Maths", "MSc Physics", "MSc Chemistry"]);
+                    break;
+                // Add cases for other departments
+                case "ComputerScience":
+                    addOptions(course, ["BCA", "MCA", "BSc Computer Science", "MSc Computer Science",]);
+                    break;
+                case "Humanities":
+                    addOptions(course, ["BA History", "BA Geography", "BA Economics"]);
+                    break;
+                case "Electronics":
+                    addOptions(course, ["BE Electronics", "Diploma in Electronics"]);
+                    break;
+                case "Mathematics":
+                    addOptions(course, ["BSc Mathematics", "MSc Mathematics"]);
+                    break;
+                default:
+                    course.innerHTML = "<option value=''>Select</option>"; // Reset course if no department selected
+                    break;
+            }
+        }
+
+        function addOptions(selectElement, options) {
+            options.forEach(function (option) {
+                var optionElement = document.createElement("option");
+                optionElement.value = option;
+                optionElement.text = option;
+                selectElement.appendChild(optionElement);
+            });
+        }
+    </script>
+</body>
+</html>
