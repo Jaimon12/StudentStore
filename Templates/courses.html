@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+	<!-- Page info -->
+	<div class="page-info-section set-bg" data-setbg="{% static 'img/page-bg/1.jpg' %}">
+        <div class="container">
+            <div class="site-breadcrumb">
+                <span>Courses</span>
+            </div>
+        </div>
+    </div>
+	<!-- Page info end -->
+
+	<!-- course section -->
+				<!-- course -->
+				<div class="card">
+					<div class="card-header">
+					  FORM
+					</div>
+					<div class="card-body">
+					  <h5 class="card-title">FROME</h5>
+					  <p class="card-text">COMPALSSERY TO FILL THE FROM</p>
+					  <a href="{% url 'form' %}" class="btn btn-primary">Continoue</a>
+					</div>
+				  </div>
+				<!-- course -->
+	<!-- course section end -->
+	{% endblock %}
